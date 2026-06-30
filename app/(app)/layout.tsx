@@ -1,0 +1,42 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("nome, role")
+    .eq("id", user.id)
+    .single();
+
+  const isLider = profile?.role === "lider";
+
+  return (
+    <div className="app">
+      <header className="topbar">
+        <Link href="/inicio" className="brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-bravante.png" alt="Grupo Bravante" className="brand-logo" />
+          <div className="brand-text">
+            <strong>Lista de Presença</strong>
+            <small>Treinamentos</small>
+          </div>
+        </Link>
+        <nav className="navlinks">
+          {isLider && <Link href="/treinamentos">Treinamentos</Link>}
+          <Link href="/disponiveis">{isLider ? "Inscrever-se" : "Treinamentos"}</Link>
+          <form action="/auth/sign-out" method="post">
+            <button className="btn ghost sm">Sair</button>
+          </form>
+        </nav>
+      </header>
+      <main className="container">{children}</main>
+    </div>
+  );
+}
