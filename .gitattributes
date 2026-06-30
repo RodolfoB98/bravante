@@ -1,0 +1,4 @@
+# Normaliza line endings: LF no repo, CRLF no checkout Windows
+* text=auto eol=lf
+*.png binary
+*.docx binary
