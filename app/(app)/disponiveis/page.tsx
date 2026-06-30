@@ -57,7 +57,7 @@ export default async function Disponiveis() {
                 <EnrollForm
                   treinamentoId={t.id}
                   nomePadrao={profile?.nome || ""}
-                  empresaPadrao={profile?.empresa || "Bravante"}
+                  empresaPadrao={profile?.empresa || "Navemestra"}
                 />
               ) : insc.assinado_em ? (
                 <div className="rowtop">
