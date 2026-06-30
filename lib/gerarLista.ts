@@ -3,7 +3,7 @@ import path from "node:path";
 import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
 // @ts-expect-error — módulo sem tipos
-import ImageModule from "docxtemplater-image-module-free";
+import ImageModule from "docxtemplater-image";
 
 export type Participante = {
   nome: string;
@@ -29,6 +29,7 @@ export function gerarListaPresenca(dados: DadosLista): Buffer {
 
   const imageModule = new ImageModule({
     centered: false,
+    fileType: "docx",
     getImage: (tagValue: string) => {
       if (!tagValue) return Buffer.alloc(0);
       const base64 = tagValue.includes(",") ? tagValue.split(",")[1] : tagValue;

@@ -55,6 +55,9 @@ update public.profiles set role = 'lider' where email = 'lider@bravante.com.br';
 - **Participante** (`/disponiveis`): vê os treinamentos abertos, se inscreve escolhendo a **função** (lista padrão + campo livre "Outra"), e faz o **check-in assinando** na tela.
 - **Lista oficial** (`/api/treinamentos/[id]/lista`): gera o `.docx` no formato FRC-014 com todos que já assinaram. Só o líder que criou o treinamento consegue baixar.
 
+## Segurança
+O projeto usa **Next.js 15.5.19** (corrigido contra a CVE-2025-66478/CVE-2025-55182, RCE crítico em Server Components do App Router) e o módulo de imagem **docxtemplater-image** (que usa `@xmldom/xmldom` mantido, em vez do `xmldom` antigo e vulnerável). Rode `npm audit` periodicamente para checar novas vulnerabilidades.
+
 ## Decisões técnicas
 - **Assinatura guardada como imagem (base64) no próprio registro de inscrição**, no banco do Supabase. Evita a complexidade de permissão de arquivos em storage. Para volumes grandes, dá para migrar para o Supabase Storage depois.
 - **Template oficial corrigido**: as tabelas flutuantes do .docx original (que estouravam a margem no Word) foram convertidas para fluxo normal, então o documento renderiza igual em Word e LibreOffice. O molde fica em `lib/templates/lista_presenca.docx`.
