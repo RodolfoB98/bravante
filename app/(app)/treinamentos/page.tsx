@@ -48,7 +48,10 @@ export default async function Treinamentos() {
           </label>
           <label className="field">
             <span>Local</span>
-            <input className="input" name="local" />
+            <select className="input" name="local" defaultValue="CDA-ES">
+              <option value="CDA-ES">CDA-ES</option>
+              <option value="CDA-CO">CDA-CO</option>
+            </select>
           </label>
           <label className="field">
             <span>Data</span>
